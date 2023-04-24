@@ -15,7 +15,7 @@ const createStudent = async function (req, res) {
 
         console.log(studentData)
         
-        let photo = req.file;
+        let photo = req.files;
 
         //------------using destructuring fetching data from request body-----------//
         let { firstName, lastName, schoolName, email, mobileNumber, password} = studentData;
@@ -76,9 +76,8 @@ const createStudent = async function (req, res) {
         const salt = await bcrypt.genSalt(10);
         const encryptedPassword = await bcrypt.hash(password, salt);
 
-        if(!validation.checkString(photo)){
-            return res.status(400).send({status:false, message:"Student profile image is required"});
-        }
+        if (!photo || photo.length==0)return res.status(400).send({ status: true, message: "Provide profileImage for Users" })
+         console.log(photo)
 
         if(!validation.ValidImageType(photo[0].mimetype)){
             return res.status(400).send({status:false, msg:" Only images can be uploaded (jpeg/jpg/png)"})
@@ -156,4 +155,4 @@ const loginStudent = async function(req,res){
 }
 
 //......................................................................................................//
-module.exports ={createStudent};
+module.exports ={createStudent,loginStudent};

@@ -1,5 +1,7 @@
 //********************************Globally used functions*********************************//
 
+const mongoose = require('mongoose');
+
 // checking that there is something as input
 const checkInputsPresent = (value) => { return (Object.keys(value).length > 0); }
 
@@ -18,4 +20,6 @@ const ValidPassword = function (password) { return (/^[a-zA-Z0-9!@#$%^&*]{8,15}$
 
 const ValidImageType = (image) => {return( /image\/png|image\/jpeg|image\/jpg/.test(image));}
 
-module.exports ={checkInputsPresent,checkString,validateName,validateEmail,validateMobileNo,ValidPassword,ValidImageType}
+const validateId = (id) => { return mongoose.isValidObjectId(id); }
+
+module.exports ={checkInputsPresent,checkString,validateName,validateEmail,validateMobileNo,ValidPassword,ValidImageType,validateId}
